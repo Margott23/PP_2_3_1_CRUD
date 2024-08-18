@@ -61,8 +61,8 @@ public class UserController {
     }
 
     @PostMapping("/edit")
-    public String updateUser(@RequestBody User user, Model model) {
-        userService.update(user);
+    public String updateUser(@RequestParam(value = "id", required = false) Integer id, Model model) {
+        userService.update(userService.findById(id));
         return "redirect:/users";
     }
 
