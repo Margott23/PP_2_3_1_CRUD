@@ -1,44 +1,49 @@
 package ru.my.crud.services;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import ru.my.crud.dao.UserDAO;
 import ru.my.crud.models.User;
+import ru.my.crud.repositories.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
-    private final UserDAO userDAO;
+
+    private final UserRepository userRepository;
 
     @Autowired
-    public UserServiceImpl(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
     public List<User> findAll() {
-        return userDAO.getAllUsers();
+        return userRepository.findAll();
     }
 
     @Override
     public User findById(int id) {
-        return userDAO.getUserById(id);
+        Optional<User> user = userRepository.findById(id);
+        return user.orElse(null);
     }
 
     @Override
     public void save(User user) {
-        userDAO.addUser(user);
+        userRepository.save(user);
     }
 
     @Override
-    public void update(User updateUser) {
-        userDAO.updateUser(updateUser);
+    public void update(int id, User updateUser) {
+        updateUser.setId(id);
+        userRepository.save(updateUser);
     }
 
     @Override
     public void delete(User user) {
-        userDAO.deleteUser(user.getId());
+        userRepository.deleteById(user.getId());
     }
 }
