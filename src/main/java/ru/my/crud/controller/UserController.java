@@ -63,9 +63,6 @@ public class UserController {
     @PostMapping("/edit")
     public String updateUser(@RequestBody User user, Model model) {
         userService.update(user);
-        model.addAttribute("user", user);
-        model.addAttribute("users", userService.findAll());
-
         return "redirect:/users";
     }
 
