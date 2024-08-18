@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+
+    <style>
+        .btn {
+            display: inline-block;
+            padding: 1px 6px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #000;
+            background-color: #f0f0f0;
+            border: 1px solid #7e7e7e;
+            border-radius: 3px;
+            box-shadow: none;
+            font-family: Calibri, sans-serif;
+        }
+
+        .btn:hover {
+            background-color: #d8d8d8;
+        }
+
+        .delete-btn {
+            display: inline-block;
+            padding: 1px 6px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #000;
+            background-color: #f0f0f0;
+            border: 1px solid #7e7e7e;
+            border-radius: 3px;
+            box-shadow: none;
+            font-family: Calibri, sans-serif;
+        }
+
+        .delete-btn:hover {
+            background-color: #d8d8d8;
+        }
+    </style>
+</head>
+<body>
+Name: <a th:text="${user.getName()}">value</a><p></p>
+Surname: <a th:text="${user.getSurname()}">value</a><p></p>
+Age: <a th:text="${user.getAge()}">value</a> <p></p>
+<hr/>
+
+<form method="GET" action="/users">
+    <input type="submit" value="Back"/>
+</form>
+
+<!--Thymeleaf не позволяет в кнопке делать динамичаский запрос. Делаем в <a></a> с использованием class="btn",
+где btn(кнопка) описана в <style></style>-->
+<a th:href="@{/users/edit(id=${user.getId()})}" class="btn"> Edit </a>
+
+<!--А теперь еще мы не можем засунуть в <a></a> метод POST, можем в кнопку. НО!!! Thymeleaf не позволяет в кнопке делать(см.выше
+  Поэтому изголяемся так!-->
+<form action="/users/delete" method="post" style="display:inline;">
+    <input type="hidden" name="id" th:value="${user.getId()}">
+    <button type="submit" class="btn delete-btn">Delete</button>
+</form>
+
+
+
+</body>
+</html>
