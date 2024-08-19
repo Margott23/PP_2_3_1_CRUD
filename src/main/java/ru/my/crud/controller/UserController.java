@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.my.crud.models.User;
@@ -23,10 +22,6 @@ public class UserController {
         this.userService = userService;
     }
 
-//    @PathVariable - работает с новой страницей, т.е. в маппинге должно быть что-то типа "/{i}", где i-это именно та переменная, которую @PathVariable ищет
-//    @RequestParam - работает с нынешней странице, ищет в ней запросы типа ...?i=...&p=... и так далее. Причем, если в html файле
-//    есть запрос типа /users(id=${user.getId()}), то /users - это страница, а выражение (id=${user.getId()}) будет восприниматься как запрос "?id=1",
-//    последующие выражения в скобках будут дополнительными запросами через &
     @GetMapping()
     public String getUserById(@RequestParam(value = "id", required = false) Integer id, Model model) {
         if (id == null) {
